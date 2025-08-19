@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request; // Tambahkan ini
+use Illuminate\Support\Facades\Redirect; // Tambahkan ini
 
 class ResetPasswordController extends Controller
 {
@@ -25,5 +27,20 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/login';
+
+    /**
+     * Get the response for a successful password reset.
+     *
+     * Override this method to ensure a consistent redirect.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendResetResponse(Request $request, $response)
+    {
+        // Ubah logika redirect menjadi eksplisit
+        return Redirect::to('/login')->with('status', trans($response));
+    }
 }
